@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ──────────────────────────────────────────────────────────────
+         Form view: add the two new fields in the General Information tab
+    ──────────────────────────────────────────────────────────────── -->
+    <record id="product_template_form_view_stock_priority" model="ir.ui.view">
+        <field name="name">product.template.form.stock.priority</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="stock.view_template_property_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='route_ids']" position="before">
+                <field name="x_reordering_priority" widget="priority"/>
+                <field name="x_target_stock"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ──────────────────────────────────────────────────────────────
+         Dedicated list view grouped by priority
+    ──────────────────────────────────────────────────────────────── -->
+    <record id="product_template_list_view_stock_priority" model="ir.ui.view">
+        <field name="name">product.template.list.stock.priority</field>
+        <field name="model">product.template</field>
+        <field name="arch" type="xml">
+            <tree string="Productos por Prioridad de Reabastecimiento"
+                  decoration-danger="qty_available &lt; x_target_stock">
+                <field name="name" string="Producto"/>
+                <field name="x_reordering_priority" string="Prioridad"/>
+                <field name="x_target_stock" string="Stock Objetivo"/>
+                <field name="qty_available" string="Cantidad Disponible"/>
+                <field name="uom_id" string="Unidad de Medida" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ──────────────────────────────────────────────────────────────
+         Action that opens the list grouped by priority
+    ──────────────────────────────────────────────────────────────── -->
+    <record id="action_product_stock_priority" model="ir.actions.act_window">
+        <field name="name">Prioridad de Reabastecimiento</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="product_template_list_view_stock_priority"/>
+        <field name="context">{'group_by': 'x_reordering_priority'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No hay productos configurados con prioridad de reabastecimiento.
+            </p>
+            <p>
+                Defina el stock objetivo en cada producto para recibir alertas
+                automáticas cuando el inventario baje del nivel deseado.
+            </p>
+        </field>
+    </record>
+
+    <!-- ──────────────────────────────────────────────────────────────
+         Menu item inside Inventario
+    ──────────────────────────────────────────────────────────────── -->
+    <menuitem
+        id="menu_product_stock_priority"
+        name="Prioridad de Reabastecimiento"
+        parent="stock.menu_stock_inventory_control"
+        action="action_product_stock_priority"
+        sequence="20"/>
+
+</odoo>
