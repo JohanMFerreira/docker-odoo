@@ -2,49 +2,49 @@
 <odoo>
 
     <!-- ================================================================
-         List View
+         Vista Lista
     ================================================================ -->
     <record id="pos_discount_rule_view_list" model="ir.ui.view">
         <field name="name">pos.discount.rule.list</field>
         <field name="model">pos.discount.rule</field>
         <field name="arch" type="xml">
-            <tree string="Hourly Discount Rules">
+            <tree string="Reglas de Descuento Horario">
                 <field name="name"/>
                 <field name="hour_from"/>
                 <field name="hour_to"/>
-                <field name="discount_percentage" string="Discount (%)"/>
+                <field name="discount_percentage" string="Descuento (%)"/>
                 <field name="active" widget="boolean_toggle"/>
             </tree>
         </field>
     </record>
 
     <!-- ================================================================
-         Form View
+         Vista Formulario
     ================================================================ -->
     <record id="pos_discount_rule_view_form" model="ir.ui.view">
         <field name="name">pos.discount.rule.form</field>
         <field name="model">pos.discount.rule</field>
         <field name="arch" type="xml">
-            <form string="Hourly Discount Rule">
+            <form string="Regla de Descuento Horario">
                 <sheet>
                     <div class="oe_title">
-                        <label for="name" string="Rule Name"/>
+                        <label for="name" string="Nombre de la Regla"/>
                         <h1>
-                            <field name="name" placeholder="e.g. Happy Hour"/>
+                            <field name="name" placeholder="p. ej. Happy Hour"/>
                         </h1>
                     </div>
                     <group>
-                        <group string="Time Range">
+                        <group string="Intervalo Horario">
                             <field name="hour_from"
                                    widget="float_time"
-                                   string="From (HH:MM)"/>
+                                   string="Desde (HH:MM)"/>
                             <field name="hour_to"
                                    widget="float_time"
-                                   string="To (HH:MM)"/>
+                                   string="Hasta (HH:MM)"/>
                         </group>
-                        <group string="Discount">
+                        <group string="Descuento">
                             <field name="discount_percentage"
-                                   string="Discount (%)"/>
+                                   string="Descuento (%)"/>
                             <field name="active"/>
                         </group>
                     </group>
@@ -54,29 +54,29 @@
     </record>
 
     <!-- ================================================================
-         Action
+         Acción
     ================================================================ -->
     <record id="action_pos_discount_rule" model="ir.actions.act_window">
-        <field name="name">Hourly Discount Rules</field>
+        <field name="name">Reglas de Descuento Horario</field>
         <field name="res_model">pos.discount.rule</field>
         <field name="view_mode">tree,form</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
-                Create your first hourly discount rule!
+                ¡Crea tu primera regla de descuento horario!
             </p>
             <p>
-                Define time ranges and discount percentages that will be
-                applied automatically to POS orders.
+                Define intervalos horarios y porcentajes de descuento que se
+                aplicarán automáticamente a los pedidos del TPV.
             </p>
         </field>
     </record>
 
     <!-- ================================================================
-         Menu: POS > Configuration > Hourly Discount Rules
+         Menú: TPV > Configuración > Reglas de Descuento Horario
     ================================================================ -->
     <menuitem
         id="menu_pos_discount_rule"
-        name="Hourly Discount Rules"
+        name="Reglas de Descuento Horario"
         parent="point_of_sale.menu_point_config_product"
         action="action_pos_discount_rule"
         sequence="50"/>

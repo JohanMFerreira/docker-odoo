@@ -2,7 +2,7 @@
 {
     'name': 'POS Hourly Discount',
     'version': '17.0.1',
-    'summary': 'Apply automatic discounts on POS orders based on time-of-day rules.',
+    'summary': 'Aplica descuentos automáticos en pedidos de TPV según franjas horarias.',
     'description': """
         Permite configurar reglas de descuento vinculadas a intervalos de tiempo. 
         Cuando se crea un pedido en el punto de venta, la regla activa cuyo intervalo 

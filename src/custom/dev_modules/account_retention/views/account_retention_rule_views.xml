@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <!-- List view -->
+    <!-- Vista Lista -->
     <record id="view_account_retention_rule_list" model="ir.ui.view">
         <field name="name">account.retention.rule.list</field>
         <field name="model">account.retention.rule</field>
@@ -16,7 +16,7 @@
         </field>
     </record>
 
-    <!-- Form view -->
+    <!-- Vista Formulario -->
     <record id="view_account_retention_rule_form" model="ir.ui.view">
         <field name="name">account.retention.rule.form</field>
         <field name="model">account.retention.rule</field>
@@ -47,7 +47,7 @@
         </field>
     </record>
 
-    <!-- Action -->
+    <!-- Acción -->
     <record id="action_account_retention_rule" model="ir.actions.act_window">
         <field name="name">Reglas de Retención</field>
         <field name="res_model">account.retention.rule</field>
@@ -64,7 +64,7 @@
         </field>
     </record>
 
-    <!-- Menu item under Accounting > Configuration -->
+    <!-- Elemento de menú en Contabilidad > Configuración -->
     <menuitem
         id="menu_account_retention_rule"
         name="Reglas de Retención"

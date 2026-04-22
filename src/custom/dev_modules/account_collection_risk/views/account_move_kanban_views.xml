@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <!-- ==================== KANBAN VIEW ==================== -->
+    <!-- ==================== VISTA KANBAN ==================== -->
     <record id="view_account_move_risk_kanban" model="ir.ui.view">
         <field name="name">account.move.risk.kanban</field>
         <field name="model">account.move</field>
@@ -78,7 +78,7 @@
         </field>
     </record>
 
-    <!-- ==================== LIST VIEW (complementaria) ==================== -->
+    <!-- ==================== VISTA LISTA (complementaria) ==================== -->
     <record id="view_account_move_risk_list" model="ir.ui.view">
         <field name="name">account.move.risk.list</field>
         <field name="model">account.move</field>
@@ -101,7 +101,7 @@
         </field>
     </record>
 
-    <!-- ==================== SEARCH VIEW ==================== -->
+    <!-- ==================== VISTA DE BÚSQUEDA ==================== -->
     <record id="view_account_move_risk_search" model="ir.ui.view">
         <field name="name">account.move.risk.search</field>
         <field name="model">account.move</field>
@@ -131,7 +131,7 @@
         </field>
     </record>
 
-    <!-- ==================== ACTION ==================== -->
+    <!-- ==================== ACCIÓN ==================== -->
     <record id="action_account_move_risk_dashboard" model="ir.actions.act_window">
         <field name="name">Panel de Riesgos</field>
         <field name="res_model">account.move</field>
@@ -154,7 +154,7 @@
         </field>
     </record>
 
-    <!-- ==================== MENU ==================== -->
+    <!-- ==================== MENÚ ==================== -->
     <menuitem
         id="menu_account_move_risk_dashboard"
         name="Panel de Riesgos"

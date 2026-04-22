@@ -19,26 +19,26 @@ class ProductTemplate(models.Model):
         string="Prioridad de Reabastecimiento",
         default="medium",
         index=True,
-        help="Priority level used to order reordering tasks.",
+        help="Nivel de prioridad para ordenar las tareas de reabastecimiento.",
     )
     x_target_stock = fields.Float(
         string="Stock Objetivo",
         default=0.0,
         digits="Product Unit of Measure",
-        help="Minimum desired quantity on hand. An activity is raised when "
-             "qty_available falls below this value.",
+        help="Cantidad mínima deseada en stock. Se crea una actividad cuando "
+             "qty_available cae por debajo de este valor.",
     )
 
     def action_check_reordering(self):
-        """Called by the scheduled action (cron).
+        """Invocado por la acción programada (cron).
 
-        Iterates all published product templates that have a target stock
-        greater than zero and whose available quantity is below the target.
-        Creates a *mail.activity* for the stock manager when one does not
-        already exist for the same record, type and summary.
+        Itera todos los productos publicados con stock objetivo mayor que
+        cero y cuya cantidad disponible está por debajo del objetivo.
+        Crea una *mail.activity* para el responsable de almacén cuando no
+        existe ya una para el mismo registro, tipo y resumen.
         """
-        # When invoked from a cron, ``self`` is an empty recordset; use
-        # search to retrieve all candidates.
+        # Al invocarse desde un cron, ``self`` es un recordset vacío; se usa
+        # search para obtener todos los candidatos.
         templates = self.search([("x_target_stock", ">", 0.0)])
         if not templates:
             return
@@ -49,8 +49,8 @@ class ProductTemplate(models.Model):
         responsible = managers[:1] if managers else self.env.user
 
         for template in templates:
-            # qty_available is a stored computed field on product.template
-            # that sums stock.quant lines for all variants.
+            # qty_available es un campo calculado almacenado en product.template
+            # que suma las líneas de stock.quant de todas las variantes.
             if template.qty_available >= template.x_target_stock:
                 continue
 
@@ -58,7 +58,7 @@ class ProductTemplate(models.Model):
                 "Stock bajo: %.2f disponible vs %.2f objetivo"
             ) % (template.qty_available, template.x_target_stock)
 
-            # Avoid duplicate activities with the same model/record/type/summary.
+            # Evitar actividades duplicadas con el mismo modelo/registro/tipo/resumen.
             existing = self.env["mail.activity"].search(
                 [
                     ("res_model", "=", "product.template"),
@@ -70,7 +70,7 @@ class ProductTemplate(models.Model):
             )
             if existing:
                 _logger.debug(
-                    "Skipping duplicate activity for product.template id=%s",
+                    "Omitiendo actividad duplicada para product.template id=%s",
                     template.id,
                 )
                 continue
@@ -96,7 +96,7 @@ class ProductTemplate(models.Model):
                 }
             )
             _logger.info(
-                "Created reordering activity for product.template id=%s (%s)",
+                "Actividad de reabastecimiento creada para product.template id=%s (%s)",
                 template.id,
                 template.name,
             )

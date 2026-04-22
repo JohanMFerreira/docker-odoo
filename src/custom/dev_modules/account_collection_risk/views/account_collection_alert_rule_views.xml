@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <!-- ==================== LIST VIEW ==================== -->
+    <!-- ==================== VISTA LISTA ==================== -->
     <record id="view_account_collection_alert_rule_list" model="ir.ui.view">
         <field name="name">account.collection.alert.rule.list</field>
         <field name="model">account.collection.alert.rule</field>
@@ -20,7 +20,7 @@
         </field>
     </record>
 
-    <!-- ==================== FORM VIEW ==================== -->
+    <!-- ==================== VISTA FORMULARIO ==================== -->
     <record id="view_account_collection_alert_rule_form" model="ir.ui.view">
         <field name="name">account.collection.alert.rule.form</field>
         <field name="model">account.collection.alert.rule</field>
@@ -48,7 +48,7 @@
         </field>
     </record>
 
-    <!-- ==================== SEARCH VIEW ==================== -->
+    <!-- ==================== VISTA DE BÚSQUEDA ==================== -->
     <record id="view_account_collection_alert_rule_search" model="ir.ui.view">
         <field name="name">account.collection.alert.rule.search</field>
         <field name="model">account.collection.alert.rule</field>
@@ -75,7 +75,7 @@
         </field>
     </record>
 
-    <!-- ==================== ACTION ==================== -->
+    <!-- ==================== ACCIÓN ==================== -->
     <record id="action_account_collection_alert_rule" model="ir.actions.act_window">
         <field name="name">Reglas de Alerta de Cobro</field>
         <field name="res_model">account.collection.alert.rule</field>
@@ -92,7 +92,7 @@
         </field>
     </record>
 
-    <!-- ==================== MENU ==================== -->
+    <!-- ==================== MENÚ ==================== -->
     <!-- Menú principal Cobros bajo Contabilidad -->
     <menuitem
         id="menu_account_collection_risk_root"

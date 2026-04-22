@@ -2,7 +2,7 @@ from odoo.tests.common import TransactionCase
 
 
 class TestStockTagging(TransactionCase):
-    """Unit tests for the stock_tagging module."""
+    """Tests unitarios para el módulo stock_tagging."""
 
     @classmethod
     def setUpClass(cls):
@@ -11,7 +11,7 @@ class TestStockTagging(TransactionCase):
         cls.StockOperationTag = cls.env["stock.operation.tag"]
 
     # ------------------------------------------------------------------
-    # Helpers
+    # Auxiliares
     # ------------------------------------------------------------------
 
     def _create_tag(self, name, operation_type="all", color=1):
@@ -31,7 +31,7 @@ class TestStockTagging(TransactionCase):
     # ------------------------------------------------------------------
 
     def test_create_tag(self):
-        """A stock.operation.tag can be created with all expected fields."""
+        """Se puede crear un stock.operation.tag con todos los campos esperados."""
         tag = self._create_tag(
             name="Entrada Urgente",
             operation_type="receipt",
@@ -43,7 +43,7 @@ class TestStockTagging(TransactionCase):
         self.assertEqual(tag.color, 3)
 
     def test_assign_tag_to_product(self):
-        """A tag can be assigned to a product.template via x_operation_tag_ids."""
+        """Se puede asignar un tag a un product.template mediante x_operation_tag_ids."""
         tag = self._create_tag("Devolución Rápida", operation_type="delivery", color=5)
         product = self._create_product("Producto Test")
 
@@ -56,13 +56,13 @@ class TestStockTagging(TransactionCase):
         )
 
     def test_many2many_relationship(self):
-        """The Many2Many relation works in both directions."""
+        """La relación Many2Many funciona en ambas direcciones."""
         tag_a = self._create_tag("Tag A", color=1)
         tag_b = self._create_tag("Tag B", color=2)
         product_1 = self._create_product("Producto 1")
         product_2 = self._create_product("Producto 2")
 
-        # Assign both tags to product_1 and only tag_b to product_2
+        # Asignar ambos tags a product_1 y solo tag_b a product_2
         product_1.x_operation_tag_ids = [(6, 0, [tag_a.id, tag_b.id])]
         product_2.x_operation_tag_ids = [(6, 0, [tag_b.id])]
 
@@ -73,16 +73,16 @@ class TestStockTagging(TransactionCase):
         self.assertEqual(len(product_2.x_operation_tag_ids), 1)
         self.assertIn(tag_b, product_2.x_operation_tag_ids)
 
-        # Verify inverse: tag_b should be linked to both products
+        # Verificar inverso: tag_b debe estar vinculado a ambos productos
         self.assertIn(product_1, tag_b.product_template_ids)
         self.assertIn(product_2, tag_b.product_template_ids)
 
-        # tag_a should only be linked to product_1
+        # tag_a solo debe estar vinculado a product_1
         self.assertIn(product_1, tag_a.product_template_ids)
         self.assertNotIn(product_2, tag_a.product_template_ids)
 
     def test_tag_default_operation_type(self):
-        """Default operation_type for a new tag is 'all'."""
+        """El operation_type por defecto de un nuevo tag es 'all'."""
         tag = self.StockOperationTag.create({"name": "Sin tipo explícito"})
         self.assertEqual(
             tag.operation_type,
@@ -91,12 +91,12 @@ class TestStockTagging(TransactionCase):
         )
 
     def test_remove_tag_from_product(self):
-        """A tag can be removed from a product without deleting the tag."""
+        """Se puede eliminar un tag de un producto sin eliminar el tag."""
         tag = self._create_tag("Tag Removible", color=7)
         product = self._create_product("Producto con tag")
         product.x_operation_tag_ids = [(4, tag.id)]
 
-        # Remove the tag
+        # Eliminar el tag
         product.x_operation_tag_ids = [(3, tag.id)]
 
         self.assertNotIn(
@@ -104,7 +104,7 @@ class TestStockTagging(TransactionCase):
             product.x_operation_tag_ids,
             "El tag no debe estar en el producto después de ser eliminado.",
         )
-        # Tag must still exist in the database
+        # El tag debe seguir existiendo en la base de datos
         self.assertTrue(
             self.StockOperationTag.browse(tag.id).exists(),
             "El tag no debe ser eliminado de la base de datos al desvincularse.",

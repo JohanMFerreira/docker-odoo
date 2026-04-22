@@ -2,10 +2,10 @@
 <odoo>
 
     <!-- ================================================================
-         Views for stock.operation.tag
+         Vistas para stock.operation.tag
     ================================================================ -->
 
-    <!-- List view -->
+    <!-- Vista Lista -->
     <record id="stock_operation_tag_view_list" model="ir.ui.view">
         <field name="name">stock.operation.tag.list</field>
         <field name="model">stock.operation.tag</field>
@@ -19,7 +19,7 @@
         </field>
     </record>
 
-    <!-- Form view -->
+    <!-- Vista Formulario -->
     <record id="stock_operation_tag_view_form" model="ir.ui.view">
         <field name="name">stock.operation.tag.form</field>
         <field name="model">stock.operation.tag</field>
@@ -50,7 +50,7 @@
         </field>
     </record>
 
-    <!-- Action for stock.operation.tag -->
+    <!-- Acción para stock.operation.tag -->
     <record id="action_stock_operation_tag" model="ir.actions.act_window">
         <field name="name">Etiquetas Operativas</field>
         <field name="res_model">stock.operation.tag</field>
@@ -67,7 +67,7 @@
     </record>
 
     <!-- ================================================================
-         Kanban view for product.template grouped by x_operation_tag_ids
+         Vista Kanban para product.template agrupada por x_operation_tag_ids
     ================================================================ -->
 
     <record id="product_template_view_kanban_by_tag" model="ir.ui.view">
@@ -105,7 +105,7 @@
         </field>
     </record>
 
-    <!-- Action: Products by Operation Tag (Kanban + list) -->
+    <!-- Acción: Productos por Etiqueta Operativa (Kanban + lista) -->
     <record id="action_product_by_operation_tag" model="ir.actions.act_window">
         <field name="name">Productos por Etiqueta Operativa</field>
         <field name="res_model">product.template</field>
@@ -125,10 +125,10 @@
     </record>
 
     <!-- ================================================================
-         Menu items
+         Elementos de Menú
     ================================================================ -->
 
-    <!-- Tags config under Inventory > Configuration -->
+    <!-- Configuración de etiquetas en Inventario > Configuración -->
     <menuitem
         id="menu_stock_operation_tag_config"
         name="Etiquetas Operativas"
@@ -136,7 +136,7 @@
         action="action_stock_operation_tag"
         sequence="50"/>
 
-    <!-- Products by tag under Inventory (root menu) -->
+    <!-- Productos por etiqueta en Inventario (menú raíz) -->
     <menuitem
         id="menu_product_by_operation_tag"
         name="Etiquetas Operativas"

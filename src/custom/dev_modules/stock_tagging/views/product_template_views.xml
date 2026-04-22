@@ -2,8 +2,8 @@
 <odoo>
 
     <!-- ================================================================
-         Inherit the base product list view to add x_operation_tag_ids
-         after the uom_id column (visible in Inventory > Products list).
+         Hereda la vista lista base de productos para agregar x_operation_tag_ids
+         después de la columna uom_id (visible en Inventario > Lista de Productos).
     ================================================================ -->
 
     <record id="product_template_list_view_stock_tagging" model="ir.ui.view">

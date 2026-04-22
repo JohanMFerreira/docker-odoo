@@ -81,11 +81,11 @@ class AccountMove(models.Model):
         retention_amount = taxable_amount * (rule.retention_rate / 100.0)
         balance = retention_amount if self.move_type == 'out_invoice' else -retention_amount
 
-        # display_type='tax' bypasses _sync_invoice's first loop (which resets
-        # amount_currency from price_subtotal for 'product' lines to 0).
-        # The second loop then sets balance = amount_currency / currency_rate.
-        # Passing only amount_currency (no balance/debit/credit) triggers
-        # _prepare_create_values to remove the precomputed balance=0 from INSERT.
+        # display_type='tax' omite el primer bucle de _sync_invoice (que reinicia
+        # amount_currency a 0 para líneas de tipo 'product').
+        # El segundo bucle establece balance = amount_currency / currency_rate.
+        # Pasar solo amount_currency (sin balance/debit/credit) hace que
+        # _prepare_create_values elimine el balance=0 precalculado del INSERT.
         self.env['account.move.line'].with_context(
             check_move_validity=False
         ).create({

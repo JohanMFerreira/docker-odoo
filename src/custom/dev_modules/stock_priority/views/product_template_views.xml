@@ -2,7 +2,7 @@
 <odoo>
 
     <!-- ──────────────────────────────────────────────────────────────
-         Form view: add the two new fields in the General Information tab
+         Vista Formulario: agrega los dos nuevos campos en la pestaña Información General
     ──────────────────────────────────────────────────────────────── -->
     <record id="product_template_form_view_stock_priority" model="ir.ui.view">
         <field name="name">product.template.form.stock.priority</field>
@@ -17,7 +17,7 @@
     </record>
 
     <!-- ──────────────────────────────────────────────────────────────
-         Dedicated list view grouped by priority
+         Vista Lista dedicada agrupada por prioridad
     ──────────────────────────────────────────────────────────────── -->
     <record id="product_template_list_view_stock_priority" model="ir.ui.view">
         <field name="name">product.template.list.stock.priority</field>
@@ -35,7 +35,7 @@
     </record>
 
     <!-- ──────────────────────────────────────────────────────────────
-         Action that opens the list grouped by priority
+         Acción que abre la lista agrupada por prioridad
     ──────────────────────────────────────────────────────────────── -->
     <record id="action_product_stock_priority" model="ir.actions.act_window">
         <field name="name">Prioridad de Reabastecimiento</field>
@@ -55,7 +55,7 @@
     </record>
 
     <!-- ──────────────────────────────────────────────────────────────
-         Menu item inside Inventario
+         Elemento de menú en Inventario
     ──────────────────────────────────────────────────────────────── -->
     <menuitem
         id="menu_product_stock_priority"

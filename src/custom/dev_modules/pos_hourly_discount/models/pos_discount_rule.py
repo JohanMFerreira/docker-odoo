@@ -5,27 +5,27 @@ from odoo.exceptions import ValidationError
 
 class PosDiscountRule(models.Model):
     _name = 'pos.discount.rule'
-    _description = 'POS Hourly Discount Rule'
+    _description = 'Regla de Descuento Horario TPV'
     _order = 'hour_from'
 
-    name = fields.Char(string='Name', required=True)
+    name = fields.Char(string='Nombre', required=True)
     hour_from = fields.Float(
-        string='Hour From',
-        help='Start of the time range (e.g. 12.0 = 12:00, 13.5 = 13:30).',
+        string='Hora Desde',
+        help='Inicio del intervalo horario (p. ej. 12.0 = 12:00, 13.5 = 13:30).',
     )
     hour_to = fields.Float(
-        string='Hour To',
-        help='End of the time range (exclusive).',
+        string='Hora Hasta',
+        help='Fin del intervalo horario (exclusivo).',
     )
     discount_percentage = fields.Float(
-        string='Discount (%)',
+        string='Descuento (%)',
         digits=(5, 2),
-        help='Percentage to apply to all POS order lines.',
+        help='Porcentaje a aplicar en todas las líneas del pedido TPV.',
     )
-    active = fields.Boolean(string='Active', default=True)
+    active = fields.Boolean(string='Activo', default=True)
 
     # ------------------------------------------------------------------
-    # Constraints
+    # Restricciones
     # ------------------------------------------------------------------
 
     @api.constrains('hour_from', 'hour_to')
@@ -33,8 +33,8 @@ class PosDiscountRule(models.Model):
         for rule in self:
             if rule.hour_from >= rule.hour_to:
                 raise ValidationError(
-                    'The start time (Hour From) must be strictly less than '
-                    'the end time (Hour To) for rule "%s".' % rule.name
+                    'La hora de inicio (Hora Desde) debe ser estrictamente menor '
+                    'que la hora de fin (Hora Hasta) en la regla "%s".' % rule.name
                 )
 
     @api.constrains('discount_percentage')
@@ -42,13 +42,13 @@ class PosDiscountRule(models.Model):
         for rule in self:
             if not (0.0 <= rule.discount_percentage <= 100.0):
                 raise ValidationError(
-                    'The discount percentage must be between 0 and 100 '
-                    'for rule "%s".' % rule.name
+                    'El porcentaje de descuento debe estar entre 0 y 100 '
+                    'para la regla "%s".' % rule.name
                 )
 
     @api.constrains('hour_from', 'hour_to', 'active')
     def _check_no_overlap(self):
-        """Ensure no two active rules have overlapping time ranges."""
+        """Verifica que no haya dos reglas activas con intervalos horarios solapados."""
         for rule in self:
             if not rule.active:
                 continue
@@ -61,6 +61,6 @@ class PosDiscountRule(models.Model):
             if overlapping:
                 names = ', '.join(overlapping.mapped('name'))
                 raise ValidationError(
-                    'The time range of rule "%s" overlaps with: %s.'
+                    'El intervalo horario de la regla "%s" se solapa con: %s.'
                     % (rule.name, names)
                 )
