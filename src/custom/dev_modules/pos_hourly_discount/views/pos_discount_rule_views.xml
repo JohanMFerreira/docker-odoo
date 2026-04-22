@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ================================================================
+         List View
+    ================================================================ -->
+    <record id="pos_discount_rule_view_list" model="ir.ui.view">
+        <field name="name">pos.discount.rule.list</field>
+        <field name="model">pos.discount.rule</field>
+        <field name="arch" type="xml">
+            <tree string="Hourly Discount Rules">
+                <field name="name"/>
+                <field name="hour_from"/>
+                <field name="hour_to"/>
+                <field name="discount_percentage" string="Discount (%)"/>
+                <field name="active" widget="boolean_toggle"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ================================================================
+         Form View
+    ================================================================ -->
+    <record id="pos_discount_rule_view_form" model="ir.ui.view">
+        <field name="name">pos.discount.rule.form</field>
+        <field name="model">pos.discount.rule</field>
+        <field name="arch" type="xml">
+            <form string="Hourly Discount Rule">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Rule Name"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. Happy Hour"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Time Range">
+                            <field name="hour_from"
+                                   widget="float_time"
+                                   string="From (HH:MM)"/>
+                            <field name="hour_to"
+                                   widget="float_time"
+                                   string="To (HH:MM)"/>
+                        </group>
+                        <group string="Discount">
+                            <field name="discount_percentage"
+                                   string="Discount (%)"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ================================================================
+         Action
+    ================================================================ -->
+    <record id="action_pos_discount_rule" model="ir.actions.act_window">
+        <field name="name">Hourly Discount Rules</field>
+        <field name="res_model">pos.discount.rule</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first hourly discount rule!
+            </p>
+            <p>
+                Define time ranges and discount percentages that will be
+                applied automatically to POS orders.
+            </p>
+        </field>
+    </record>
+
+    <!-- ================================================================
+         Menu: POS > Configuration > Hourly Discount Rules
+    ================================================================ -->
+    <menuitem
+        id="menu_pos_discount_rule"
+        name="Hourly Discount Rules"
+        parent="point_of_sale.menu_point_config_product"
+        action="action_pos_discount_rule"
+        sequence="50"/>
+
+</odoo>
