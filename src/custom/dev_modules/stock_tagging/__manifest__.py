@@ -1,7 +1,7 @@
 {
     "name": "Stock Operation Tagging",
     "summary": "Etiquetas operativas para productos en Inventario con vista Kanban agrupada.",
-    "version": "17.0.1",
+    "version": "17.0.1.0.0",
     "category": "Inventory",
     "author": "Johan Ferreira",
     "license": "LGPL-3",
