@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ==================== LIST VIEW ==================== -->
+    <record id="view_account_collection_alert_rule_list" model="ir.ui.view">
+        <field name="name">account.collection.alert.rule.list</field>
+        <field name="model">account.collection.alert.rule</field>
+        <field name="arch" type="xml">
+            <tree string="Reglas de Alerta de Cobro"
+                  decoration-danger="risk_level == 'critical'"
+                  decoration-warning="risk_level == 'high'"
+                  decoration-info="risk_level == 'medium'"
+                  decoration-success="risk_level == 'low'">
+                <field name="name"/>
+                <field name="risk_level"/>
+                <field name="days_overdue"/>
+                <field name="amount_min"/>
+                <field name="active" widget="boolean_toggle"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ==================== FORM VIEW ==================== -->
+    <record id="view_account_collection_alert_rule_form" model="ir.ui.view">
+        <field name="name">account.collection.alert.rule.form</field>
+        <field name="model">account.collection.alert.rule</field>
+        <field name="arch" type="xml">
+            <form string="Regla de Alerta de Cobro">
+                <sheet>
+                    <div class="oe_button_box" name="button_box"/>
+                    <widget name="web_ribbon"
+                            title="Archivado"
+                            bg_color="text-bg-danger"
+                            invisible="active"/>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="risk_level"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="days_overdue"/>
+                            <field name="amount_min"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ==================== SEARCH VIEW ==================== -->
+    <record id="view_account_collection_alert_rule_search" model="ir.ui.view">
+        <field name="name">account.collection.alert.rule.search</field>
+        <field name="model">account.collection.alert.rule</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Reglas de Alerta">
+                <field name="name"/>
+                <field name="risk_level"/>
+                <filter string="Activas" name="active" domain="[('active', '=', True)]"/>
+                <filter string="Archivadas" name="inactive" domain="[('active', '=', False)]"/>
+                <separator/>
+                <filter string="Crítico" name="critical"
+                        domain="[('risk_level', '=', 'critical')]"/>
+                <filter string="Alto"     name="high"
+                        domain="[('risk_level', '=', 'high')]"/>
+                <filter string="Medio"    name="medium"
+                        domain="[('risk_level', '=', 'medium')]"/>
+                <filter string="Bajo"     name="low"
+                        domain="[('risk_level', '=', 'low')]"/>
+                <group expand="0" string="Agrupar por">
+                    <filter string="Nivel de Riesgo" name="group_risk_level"
+                            context="{'group_by': 'risk_level'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ==================== ACTION ==================== -->
+    <record id="action_account_collection_alert_rule" model="ir.actions.act_window">
+        <field name="name">Reglas de Alerta de Cobro</field>
+        <field name="res_model">account.collection.alert.rule</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_account_collection_alert_rule_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crea tu primera regla de alerta de cobro
+            </p>
+            <p>
+                Define umbrales de días vencidos y montos para clasificar
+                automáticamente el riesgo de cobro de tus facturas.
+            </p>
+        </field>
+    </record>
+
+    <!-- ==================== MENU ==================== -->
+    <!-- Menú principal Cobros bajo Contabilidad -->
+    <menuitem
+        id="menu_account_collection_risk_root"
+        name="Cobros"
+        parent="account.menu_finance"
+        sequence="25"/>
+
+    <menuitem
+        id="menu_account_collection_alert_rule"
+        name="Reglas de Alerta"
+        parent="menu_account_collection_risk_root"
+        action="action_account_collection_alert_rule"
+        sequence="10"/>
+
+</odoo>

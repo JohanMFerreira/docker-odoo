@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ==================== KANBAN VIEW ==================== -->
+    <record id="view_account_move_risk_kanban" model="ir.ui.view">
+        <field name="name">account.move.risk.kanban</field>
+        <field name="model">account.move</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="x_risk_level"
+                    class="o_kanban_small_column"
+                    quick_create="false">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="invoice_date_due"/>
+                <field name="amount_residual"/>
+                <field name="currency_id"/>
+                <field name="x_risk_level"/>
+                <field name="payment_state"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="card">
+                        <!-- Color de borde según nivel de riesgo -->
+                        <div t-attf-class="
+                            oe_kanban_card oe_kanban_global_click
+                            #{record.x_risk_level.raw_value === 'critical' ? 'border-danger' : ''}
+                            #{record.x_risk_level.raw_value === 'high'     ? 'border-warning' : ''}
+                            #{record.x_risk_level.raw_value === 'medium'   ? 'border-info' : ''}
+                            #{record.x_risk_level.raw_value === 'low'      ? 'border-success' : ''}
+                        ">
+                            <!-- Etiqueta de nivel de riesgo -->
+                            <div class="o_kanban_record_top mb-0">
+                                <div class="o_kanban_record_headings">
+                                    <strong class="o_kanban_record_title">
+                                        <field name="name"/>
+                                    </strong>
+                                </div>
+                                <div>
+                                    <span t-if="record.x_risk_level.raw_value === 'critical'"
+                                          class="badge text-bg-danger">Crítico</span>
+                                    <span t-if="record.x_risk_level.raw_value === 'high'"
+                                          class="badge text-bg-warning">Alto</span>
+                                    <span t-if="record.x_risk_level.raw_value === 'medium'"
+                                          class="badge text-bg-info">Medio</span>
+                                    <span t-if="record.x_risk_level.raw_value === 'low'"
+                                          class="badge text-bg-success">Bajo</span>
+                                    <span t-if="record.x_risk_level.raw_value === 'none'"
+                                          class="badge text-bg-secondary">Sin Riesgo</span>
+                                </div>
+                            </div>
+
+                            <div class="o_kanban_record_body">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <span class="text-muted small">Cliente:</span><br/>
+                                        <field name="partner_id"/>
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        <span class="text-muted small">Vencimiento:</span><br/>
+                                        <field name="invoice_date_due"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="o_kanban_record_bottom">
+                                <div class="oe_kanban_bottom_left">
+                                    <span class="text-muted small">Pendiente:</span>
+                                    <strong>
+                                        <field name="amount_residual"
+                                               widget="monetary"
+                                               options="{'currency_field': 'currency_id'}"/>
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- ==================== LIST VIEW (complementaria) ==================== -->
+    <record id="view_account_move_risk_list" model="ir.ui.view">
+        <field name="name">account.move.risk.list</field>
+        <field name="model">account.move</field>
+        <field name="arch" type="xml">
+            <tree string="Panel de Riesgos de Cobro"
+                  decoration-danger="x_risk_level == 'critical'"
+                  decoration-warning="x_risk_level == 'high'"
+                  decoration-info="x_risk_level == 'medium'"
+                  decoration-success="x_risk_level == 'low'">
+                <field name="name" string="Factura"/>
+                <field name="partner_id" string="Cliente"/>
+                <field name="invoice_date_due" string="Vencimiento"/>
+                <field name="amount_residual" string="Pendiente"
+                       widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="x_risk_level" string="Nivel de Riesgo"/>
+                <field name="payment_state" string="Estado de Pago"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ==================== SEARCH VIEW ==================== -->
+    <record id="view_account_move_risk_search" model="ir.ui.view">
+        <field name="name">account.move.risk.search</field>
+        <field name="model">account.move</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Facturas por Riesgo">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="x_risk_level"/>
+                <filter string="Crítico"   name="critical"
+                        domain="[('x_risk_level', '=', 'critical')]"/>
+                <filter string="Alto"      name="high"
+                        domain="[('x_risk_level', '=', 'high')]"/>
+                <filter string="Medio"     name="medium"
+                        domain="[('x_risk_level', '=', 'medium')]"/>
+                <filter string="Bajo"      name="low"
+                        domain="[('x_risk_level', '=', 'low')]"/>
+                <filter string="Con Riesgo" name="with_risk"
+                        domain="[('x_risk_level', '!=', 'none')]"/>
+                <separator/>
+                <group expand="1" string="Agrupar por">
+                    <filter string="Nivel de Riesgo" name="group_risk_level"
+                            context="{'group_by': 'x_risk_level'}"/>
+                    <filter string="Cliente"         name="group_partner"
+                            context="{'group_by': 'partner_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ==================== ACTION ==================== -->
+    <record id="action_account_move_risk_dashboard" model="ir.actions.act_window">
+        <field name="name">Panel de Riesgos</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[('move_type', '=', 'out_invoice'), ('state', '=', 'posted')]</field>
+        <field name="context">{
+            'default_move_type': 'out_invoice',
+            'search_default_group_risk_level': 1
+        }</field>
+        <field name="search_view_id" ref="view_account_move_risk_search"/>
+        <field name="view_ids" eval="[
+            (5, 0, 0),
+            (0, 0, {'view_mode': 'kanban', 'view_id': ref('view_account_move_risk_kanban')}),
+            (0, 0, {'view_mode': 'tree',   'view_id': ref('view_account_move_risk_list')}),
+        ]"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No hay facturas publicadas con riesgo de cobro.
+            </p>
+        </field>
+    </record>
+
+    <!-- ==================== MENU ==================== -->
+    <menuitem
+        id="menu_account_move_risk_dashboard"
+        name="Panel de Riesgos"
+        parent="account_collection_risk.menu_account_collection_risk_root"
+        action="action_account_move_risk_dashboard"
+        sequence="20"/>
+
+</odoo>
