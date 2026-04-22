@@ -1,6 +1,6 @@
 {
     "name": "Stock Priority",
-    "summary": "Añade la prioridad de reposición y el stock objetivo a los productos con alertas de actividad automáticas.",
+    "summary": "Añade la prioridad de reposición y el stock objetivo a los productos con alertas de actividad automáticas",
     "version": "17.0.1",
     "category": "Inventory",
     "author": "Johan Ferreira",
