@@ -75,19 +75,16 @@
         <field name="arch" type="xml">
             <kanban default_group_by="x_operation_tag_ids" class="o_kanban_small_column">
                 <field name="name"/>
-                <field name="priority"/>
                 <field name="x_operation_tag_ids"/>
+                <field name="default_code"/>
                 <templates>
-                    <t t-name="card">
+                    <t t-name="kanban-box">
                         <div class="oe_kanban_global_click">
                             <div class="o_kanban_record_top">
                                 <div class="o_kanban_record_headings">
                                     <strong class="o_kanban_record_title">
                                         <field name="name"/>
                                     </strong>
-                                </div>
-                                <div class="o_kanban_record_top_right">
-                                    <field name="priority" widget="priority"/>
                                 </div>
                             </div>
                             <div class="o_kanban_record_bottom">
