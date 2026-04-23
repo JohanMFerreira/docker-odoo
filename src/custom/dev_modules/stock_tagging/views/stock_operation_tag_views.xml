@@ -33,18 +33,17 @@
                             <field name="color" widget="color_picker"/>
                         </group>
                     </group>
-                    <group string="Descripción">
-                        <field name="description" nolabel="1"/>
-                    </group>
-                    <group string="Productos Relacionados">
-                        <field name="product_template_ids" nolabel="1">
-                            <tree>
-                                <field name="name"/>
-                                <field name="default_code"/>
-                                <field name="categ_id"/>
-                            </tree>
-                        </field>
-                    </group>
+                    <separator string="Descripción"/>
+                    <field name="description" nolabel="1" placeholder="Ingrese una descripción de la etiqueta..."/>
+                    <separator string="Productos Relacionados"/>
+                    <field name="product_template_ids" nolabel="1">
+                        <tree>
+                            <field name="name" string="Nombre" optional="show"/>
+                            <field name="default_code" string="Referencia" optional="show"/>
+                            <field name="categ_id" string="Categoría" optional="show"/>
+                            <field name="qty_available" string="Cant. Disponible" optional="show"/>
+                        </tree>
+                    </field>
                 </sheet>
             </form>
         </field>
